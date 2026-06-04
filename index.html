@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suriya's Sprint Dashboard</title>
+    
+    <!-- Preconnect to Google Fonts for Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* CSS Custom Properties for Theming */
+        :root {
+            --bg-color: #f8fafc;
+            --surface-color: #ffffff;
+            --surface-hover: #f1f5f9;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-tertiary: #94a3b8;
+            --border-color: #e2e8f0;
+            --accent-color: #0ea5e9;
+            --accent-hover: #0284c7;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --ring-color: rgba(14, 165, 233, 0.2);
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --transition-speed: 0.2s;
+        }
+
+        html.dark {
+            --bg-color: #0f172a;
+            --surface-color: #1e293b;
+            --surface-hover: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-tertiary: #64748b;
+            --border-color: #334155;
+            --accent-color: #38bdf8;
+            --accent-hover: #7dd3fc;
+            --ring-color: rgba(56, 189, 248, 0.2);
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Reset & Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Header / Theme Toggle */
+        .page-header {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1rem;
+        }
+
+        .icon-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-speed);
+        }
+
+        .icon-btn:hover {
+            background-color: var(--surface-hover);
+            color: var(--text-primary);
+        }
+
+        /* Section 1: Hero Strip */
+        .hero {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .hero-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .hero-date h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            line-height: 1.2;
+        }
+
+        .hero-date p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-top: 0.25rem;
+        }
+
+        .hero-countdown {
+            text-align: right;
+        }
+
+        .hero-countdown .days-val {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            line-height: 1;
+        }
+
+        .hero-countdown .days-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+
+        .hero-progress-container {
+            margin-bottom: 1.5rem;
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .progress-bar-bg {
+            height: 0.75rem;
+            background-color: var(--border-color);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--accent-color);
+            border-radius: 9999px;
+            transition: width 0.5s ease-out;
+        }
+
+        .tagline {
+            font-style: italic;
+            color: var(--text-tertiary);
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        /* Section 2: Today's Focus */
+        .today-focus {
+            background: linear-gradient(to right, var(--surface-color), var(--bg-color));
+            border-left: 4px solid var(--accent-color);
+            border-radius: 0 0.75rem 0.75rem 0;
+            padding: 1.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .focus-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        /* Task Item */
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            transition: background-color var(--transition-speed);
+            cursor: pointer;
+        }
+
+        .task-item:hover {
+            background-color: var(--surface-hover);
+        }
+
+        .task-item input[type="checkbox"] {
+            appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 2px solid var(--text-tertiary);
+            border-radius: 0.25rem;
+            margin-top: 0.125rem;
+            cursor: pointer;
+            display: grid;
+            place-content: center;
+            transition: all var(--transition-speed);
+            flex-shrink: 0;
+        }
+
+        .task-item input[type="checkbox"]::before {
+            content: "";
+            width: 0.65em;
+            height: 0.65em;
+            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+            transform: scale(0);
+            transform-origin: bottom left;
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em var(--bg-color);
+            background-color: var(--surface-color);
+        }
+
+        .task-item input[type="checkbox"]:checked {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+        }
+
+        .task-item input[type="checkbox"]:checked::before {
+            transform: scale(1);
+        }
+
+        .task-item input[type="checkbox"]:focus-visible {
+            outline: 2px solid var(--accent-color);
+            outline-offset: 2px;
+        }
+        
+        .task-content {
+            flex-grow: 1;
+        }
+
+        .task-text {
+            color: var(--text-primary);
+            transition: color var(--transition-speed);
+        }
+
+        .task-item input[type="checkbox"]:checked ~ .task-content .task-text {
+            text-decoration: line-through;
+            color: var(--text-tertiary);
+        }
+
+        .task-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.1rem 0.4rem;
+            border-radius: 0.25rem;
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+        }
+        
+        .badge-lk { background-color: rgba(14, 165, 233, 0.15); color: var(--accent-color); }
+        .badge-job { background-color: rgba(16, 185, 129, 0.15); color: var(--success-color); }
+        .badge-meetup { background-color: rgba(168, 85, 247, 0.15); color: #c084fc; }
+
+        /* Main 2-column layout */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Track Sections */
+        .track-section {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .track-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .track-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .track-desc {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Collapsible Day Cards */
+        .day-card {
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            overflow: hidden;
+            background-color: var(--surface-color);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            user-select: none;
+            background-color: var(--surface-hover);
+            transition: background-color var(--transition-speed);
+        }
+
+        .day-header:hover {
+            background-color: var(--border-color);
+        }
+
+        .day-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .day-icon {
+            color: var(--text-tertiary);
+            transition: transform var(--transition-speed);
+        }
+
+        .day-card.open .day-icon {
+            transform: rotate(180deg);
+        }
+
+        .day-content {
+            display: none;
+            padding: 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .day-card.open .day-content {
+            display: block;
+        }
+
+        /* Funnel Counter Widget */
+        .funnel-widget {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .stat-card {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            font-family: inherit;
+        }
+        
+        .stat-input:focus {
+            outline: none;
+            color: var(--accent-color);
+        }
+
+        /* Meetups Section */
+        .meetups-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .horizontal-scroll {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+            scrollbar-width: thin;
+            scrollbar-color: var(--text-tertiary) var(--bg-color);
+        }
+
+        .horizontal-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .horizontal-scroll::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+        
+        .horizontal-scroll::-webkit-scrollbar-thumb {
+            background-color: var(--text-tertiary);
+            border-radius: 3px;
+        }
+
+        .meetup-card {
+            min-width: 280px;
+            max-width: 320px;
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            transition: border-color var(--transition-speed);
+        }
+
+        .meetup-card:hover {
+            border-color: var(--accent-color);
+        }
+
+        .meetup-card.completed {
+            opacity: 0.6;
+        }
+
+        .meetup-date {
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .meetup-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .meetup-desc {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .meetup-meta {
+            display: flex;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--text-tertiary);
+            gap: 0.5rem;
+        }
+
+        /* Success Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .metric-card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .metric-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .metric-icon {
+            color: var(--accent-color);
+            background-color: var(--ring-color);
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+        }
+
+        .metric-text {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        /* Daily Reflection */
+        .reflection-section {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .reflection-textarea {
+            width: 100%;
+            min-height: 120px;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.95rem;
+            resize: vertical;
+            margin-bottom: 1rem;
+        }
+
+        .reflection-textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px var(--ring-color);
+        }
+
+        .btn {
+            background-color: var(--surface-hover);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: inherit;
+        }
+
+        .btn:hover {
+            background-color: var(--border-color);
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: #fff;
+            border-color: var(--accent-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .btn-danger {
+            color: var(--danger-color);
+            border-color: var(--danger-color);
+            background-color: transparent;
+        }
+
+        .btn-danger:hover {
+            background-color: rgba(239, 68, 68, 0.1);
+        }
+
+        /* Expandable Past Reflections */
+        .past-reflections {
+            margin-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+        }
+
+        #pastReflectionsList {
+            display: none;
+            margin-top: 1rem;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .past-reflection-item {
+            background-color: var(--bg-color);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .past-reflection-date {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .past-reflection-text {
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+        }
+
+        /* Footer */
+        .site-footer {
+            border-top: 1px solid var(--border-color);
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+            text-align: center;
+        }
+
+        .footer-metrics {
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+        }
+
+        .footer-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .github-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            transition: color var(--transition-speed);
+        }
+
+        .github-link:hover {
+            color: var(--text-primary);
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            place-items: center;
+            z-index: 50;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: var(--shadow-md);
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--danger-color);
+        }
+
+        .modal-body {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Theme Toggle -->
+        <header class="page-header">
+            <button id="themeToggle" class="icon-btn" aria-label="Toggle theme">
+                <i data-lucide="moon" id="themeIcon"></i>
+            </button>
+        </header>
+
+        <!-- SECTION 1: HERO STRIP -->
+        <section class="hero">
+            <div class="hero-top">
+                <div class="hero-date" id="heroDateInfo">
+                    <h1>Loading Date...</h1>
+                    <p>Day -- of 14</p>
+                </div>
+                <div class="hero-countdown">
+                    <div class="days-val" id="daysRemainingVal">--</div>
+                    <div class="days-label">Days to 18 Jun</div>
+                </div>
+            </div>
+            
+            <div class="hero-progress-container">
+                <div class="progress-header">
+                    <span>Overall Progress</span>
+                    <span id="overallProgressText">0%</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="overallProgressBar" style="width: 0%;"></div>
+                </div>
+            </div>
+            
+            <p class="tagline" id="dailyTagline">"Loading motivation..."</p>
+        </section>
+
+        <!-- SECTION 2: TODAY'S FOCUS -->
+        <section class="today-focus">
+            <h2 class="section-title"><i data-lucide="target"></i> Today's Focus</h2>
+            <ul class="focus-list" id="todayFocusList">
+                <li class="task-item">
+                    <span class="task-content"><span class="task-text">Loading today's tasks...</span></span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- TWO COLUMN LAYOUT: TRACKS -->
+        <div class="two-col">
+            <!-- SECTION 3: LEGALKGENT TRACK -->
+            <section class="track-section">
+                <div class="track-header">
+                    <h2 class="track-title">LegalKGent Track</h2>
+                    <p class="track-desc">Hardening the flagship project for credible publishing</p>
+                    <div class="progress-header">
+                        <span>Completion</span>
+                        <span id="legalProgressText">0%</span>
+                    </div>
+                    <div class="progress-bar-bg" style="height: 0.5rem;">
+                        <div class="progress-bar-fill" id="legalProgressBar" style="width: 0%;"></div>
+                    </div>
+                </div>
+                
+                <div class="day-cards" id="legalTrackContainer">
+                    <!-- Day cards injected via JS -->
+                </div>
+            </section>
+
+            <!-- SECTION 4: JOB HUNT TRACK -->
+            <section class="track-section">
+                <div class="track-header">
+                    <h2 class="track-title">Part-Time ML/Data Role Hunt</h2>
+                    <p class="track-desc">Securing a 20h/week role aligned with specs</p>
+                    <div class="progress-header">
+                        <span>Completion</span>
+                        <span id="jobProgressText">0%</span>
+                    </div>
+                    <div class="progress-bar-bg" style="height: 0.5rem;">
+                        <div class="progress-bar-fill" id="jobProgressBar" style="width: 0%;"></div>
+                    </div>
+                </div>
+                
+                <div class="day-cards" id="jobTrackContainer">
+                    <!-- Day cards injected via JS -->
+                </div>
+
+                <!-- Funnel Counter Widget -->
+                <div class="funnel-widget">
+                    <div class="stat-card">
+                        <div class="stat-label">Sent</div>
+                        <input type="number" class="stat-input" id="funnelSent" name="funnelSent" value="0" min="0">
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Replies</div>
+                        <input type="number" class="stat-input" id="funnelReplies" name="funnelReplies" value="0" min="0">
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Interviews</div>
+                        <input type="number" class="stat-input" id="funnelInterviews" name="funnelInterviews" value="0" min="0">
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- SECTION 5: MEETUPS -->
+        <section class="meetups-section">
+            <h2 class="section-title"><i data-lucide="users"></i> Meetups (In-Person London)</h2>
+            <div class="horizontal-scroll" id="meetupsContainer">
+                <!-- Meetups injected via JS -->
+            </div>
+        </section>
+
+        <!-- SECTION 6: SUCCESS METRICS -->
+        <section class="success-metrics">
+            <h2 class="section-title"><i data-lucide="trending-up"></i> Success Metrics (18 June Check)</h2>
+            <div class="metrics-grid">
+                
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <div class="metric-icon"><i data-lucide="github"></i></div>
+                        <div class="metric-text">LegalKGent has public repo with credible README, 4 baselines tested, expanded eval set (150+ queries), ablation results, published blog post. Paper skeleton exists.</div>
+                    </div>
+                    <label class="task-item" style="padding:0; margin-top: auto;">
+                        <input type="checkbox" id="metric1" data-metric="1">
+                        <span class="task-content"><span class="task-text text-sm">Goal Achieved</span></span>
+                    </label>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <div class="metric-icon"><i data-lucide="briefcase"></i></div>
+                        <div class="metric-text">20+ targeted outreach messages sent, 10+ tailored applications submitted, at least 1 interview scheduled or 1 warm founder/recruiter conversation.</div>
+                    </div>
+                    <label class="task-item" style="padding:0; margin-top: auto;">
+                        <input type="checkbox" id="metric2" data-metric="2">
+                        <span class="task-content"><span class="task-text text-sm">Goal Achieved</span></span>
+                    </label>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <div class="metric-icon"><i data-lucide="map-pin"></i></div>
+                        <div class="metric-text">Attended at least 2 in-person meetups. 5+ new LinkedIn contacts from each.</div>
+                    </div>
+                    <label class="task-item" style="padding:0; margin-top: auto;">
+                        <input type="checkbox" id="metric3" data-metric="3">
+                        <span class="task-content"><span class="task-text text-sm">Goal Achieved</span></span>
+                    </label>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <div class="metric-icon"><i data-lucide="file-check"></i></div>
+                        <div class="metric-text">Confirmed visa working-hours situation with Anglia Ruskin in writing.</div>
+                    </div>
+                    <label class="task-item" style="padding:0; margin-top: auto;">
+                        <input type="checkbox" id="metric4" data-metric="4">
+                        <span class="task-content"><span class="task-text text-sm">Goal Achieved</span></span>
+                    </label>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 7: DAILY REFLECTION -->
+        <section class="reflection-section">
+            <h2 class="section-title"><i data-lucide="book-open"></i> Daily Reflection</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem;" id="reflectionDateText"></p>
+            <textarea class="reflection-textarea" id="currentReflection" placeholder="What went well today? What needs adjustment tomorrow?"></textarea>
+            
+            <div class="past-reflections">
+                <button class="btn" id="togglePastReflectionsBtn">
+                    <i data-lucide="history" style="width: 16px; height: 16px;"></i>
+                    View past reflections
+                </button>
+                <div id="pastReflectionsList">
+                    <!-- Past reflections injected via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 8: FOOTER -->
+        <footer class="site-footer">
+            <div class="footer-metrics" id="lastUpdatedText">Last updated: Just now</div>
+            
+            <div class="footer-actions">
+                <button class="btn btn-danger" id="resetBtn">
+                    <i data-lucide="alert-triangle" style="width: 16px; height: 16px;"></i>
+                    Reset Progress
+                </button>
+                <button class="btn btn-primary" id="exportBtn">
+                    <i data-lucide="download" style="width: 16px; height: 16px;"></i>
+                    Export JSON
+                </button>
+            </div>
+            
+            <a href="#" class="github-link">
+                <i data-lucide="github" style="width: 20px; height: 20px;"></i>
+                Hosted on GitHub Pages
+            </a>
+        </footer>
+    </div>
+
+    <!-- Confirmation Modal for Reset -->
+    <div class="modal-overlay" id="resetModal">
+        <div class="modal">
+            <h3 class="modal-title">Reset All Progress?</h3>
+            <p class="modal-body">This will wipe all checked tasks, funnel counts, and daily reflections from your local browser storage. This action cannot be undone.</p>
+            <div class="modal-actions">
+                <button class="btn" id="cancelResetBtn">Cancel</button>
+                <button class="btn btn-danger" id="confirmResetBtn">Yes, wipe it</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DATA MODEL
+        const sprintStartDate = new Date('2026-06-04T00:00:00');
+        const sprintEndDate = new Date('2026-06-18T00:00:00');
+        const totalDays = 14;
+
+        const taglines = [
+            "Make it reproducible before you make it impressive.",
+            "Ship the artefact. The CV follows.",
+            "Lead with the work, not the ask.",
+            "One merged PR beats ten certificates.",
+            "The boring discipline compounds."
+        ];
+
+        const legalTasks = [
+            { day: 1, date: "2026-06-04", text: "Honest audit. Create EVAL_AUDIT.md answering: who scored the benchmark, exact rubric, baseline scoring methodology, query category breakdown, whether prompts and seeds were fixed, whether the eval is reproducible today." },
+            { day: 2, date: "2026-06-05", text: "Continue audit. Finalise EVAL_AUDIT.md. Identify every weak claim in the current README and metrics." },
+            { day: 3, date: "2026-06-06", text: "Lock the experimental setup. Pin dependencies in requirements.lock. Set deterministic seeds across vLLM, embeddings, retrieval. Freeze model versions. Write run_eval.py that takes a config and outputs structured CSV results." },
+            { day: 4, date: "2026-06-07", text: "Build proper baselines. Add BM25 (rank_bm25), vanilla dense retrieval (FAISS + LLM, no graph), and standard RAG without agent orchestration. This answers 'is the gain from agents, graph, or just better retrieval'." },
+            { day: 5, date: "2026-06-08", text: "Expand eval set from 50 to 150-200 queries. Categorise: factual lookup, multi-hop reasoning, cross-reference resolution, defined-term interpretation, edge cases. Document source of each query." },
+            { day: 6, date: "2026-06-09", text: "Dual scoring. Run an LLM judge (Claude or GPT-4 class) on all queries. Manually score a 30-query random sample. Compute Cohen's kappa for inter-rater agreement." },
+            { day: 7, date: "2026-06-10", text: "Run full eval across every baseline + your system. Build results table with means, std dev, confidence intervals. Plot wins and losses chart." },
+            { day: 8, date: "2026-06-11", text: "Error analysis. Take 20 failure cases. Categorise: retrieval miss, agent loop failure, hallucination at synthesis, prompt brittleness, knowledge graph gap. Write as a table." },
+            { day: 9, date: "2026-06-12", text: "Ablation studies. Run system three ways: full four agents, retriever + counsel only, graph component only. Document which pieces actually contribute." },
+            { day: 10, date: "2026-06-13", text: "Write README and architecture doc. Problem statement, architecture diagram (Excalidraw or Mermaid), reproduction steps, eval table, honest limitations section listing three weaknesses." },
+            { day: 11, date: "2026-06-14", text: "Draft blog post (~2000 words). Title: 'What I learned building a legal RAG agent: a benchmark, not a sales pitch'. Structure: problem, architecture with diagram, eval methodology, results with all baselines, error analysis, what didn't work, what you'd do differently." },
+            { day: 12, date: "2026-06-15", text: "Start paper draft for NLLP workshop (Natural Legal Language Processing at EMNLP or ACL). Use ACL template. 4-8 pages. Skeleton + introduction draft." },
+            { day: 13, date: "2026-06-16", text: "Peer sanity check. Send the blog draft to one NLP or legal-AI contact and ask 'what's the weakest claim in here'. Incorporate feedback genuinely." },
+            { day: 14, date: "2026-06-17", text: "Publish blog post. Cross-post to Medium, LinkedIn, X, HackerNews Show HN, MLOps Community Slack #london, AI Tinkerers London." }
+        ];
+
+        const jobTasks = [
+            { day: 1, date: "2026-06-04", text: "Set up infrastructure. Sign up for Welcome to the Jungle UK, ai-jobs.net, Wellfound, Gradcracker, Bright Network. Set keyword alerts: 'AI intern London', 'ML part time London', 'data science intern London', 'RAG engineer London', 'LLM engineer London'. Subscribe to HackerNews Hiring monthly via hnhiring.com." },
+            { day: 2, date: "2026-06-05", text: "Build sponsor list. Download UK Home Office register of licensed sponsors. Filter to London tech scale-ups. Cross-reference with target companies. Goal: 40-50 visa-eligible companies." },
+            { day: 3, date: "2026-06-06", text: "Resume tier restructure. Reorganise skills into Core / Working / Familiar. Cut the tri-cloud claim. Keep AI Engineer version as primary." },
+            { day: 4, date: "2026-06-07", text: "Cold-warm outreach round 1. Five companies where LegalKGent is directly relevant: Genie AI, Luminance, Orbital Witness, ThoughtRiver, Legora, Juro. Find senior engineer or CTO on LinkedIn. Send short message leading with the artefact, not the CV." },
+            { day: 5, date: "2026-06-08", text: "Apply to 5 tailored roles from your alerts and HN Who's Hiring. Each must be part-time, intern, or 20 hours/week. Tailored cover letters only." },
+            { day: 6, date: "2026-06-09", text: "Register with recruiter agencies: Harnham and DeepRec.ai. Be upfront about visa status and 20-hour cap in the first email." },
+            { day: 7, date: "2026-06-10", text: "Week 1 review. Count outreach sent, replies, interviews. Diagnose what's working." },
+            { day: 8, date: "2026-06-11", text: "Outreach round 2. Five scale-ups and consultancy AI arms: Quantexa, Faculty AI, Causaly, Signal AI, PolyAI. Same template, lead with LegalKGent." },
+            { day: 9, date: "2026-06-12", text: "Apply to 5 more roles from Welcome to the Jungle and HN Hiring." },
+            { day: 10, date: "2026-06-13", text: "Direct founder emails. EF portfolio, recent YC London batch, recent UK AI seed rounds. Use Sifted or TechCrunch UK. Email founders directly: 'I have 20 hours a week, here's what I built, can I help for a month'." },
+            { day: 11, date: "2026-06-14", text: "Send speculative application to Xapien (careers@xapien.com). Lead with LegalKGent." },
+            { day: 12, date: "2026-06-15", text: "Follow up. Anyone who hasn't replied to Week 1 outreach gets one polite follow up. Stop after two messages." },
+            { day: 13, date: "2026-06-16", text: "Anglia Ruskin careers portal. Email course leader and careers team about course-integral assessed placement options. This is the legal route to more than 20 hours." },
+            { day: 14, date: "2026-06-17", text: "Funnel review and reset. Count applications, replies, screens, interviews. Diagnose bottleneck if no interview scheduled." }
+        ];
+
+        const meetups = [
+            { id: "m1", date: "2026-06-11", title: "AI Tinkerers London - General Magic Movie Screening", desc: "Highest-signal builder community in London, bring laptop ready to demo LegalKGent.", meta: "Register at london.aitinkerers.org" },
+            { id: "m2", date: "2026-06-12", title: "AI for the rest of us (London Tech Week side event)", desc: "Smaller and conversational, good for practising the LegalKGent one-liner. Central London.", meta: "London Tech Week" },
+            { id: "m3", date: "2026-06-08", title: "London Tech Week side events 8-12 June 2026", desc: "Pick 2-3 evening events themed on RAG, agents, legal AI, MLOps.", meta: "techweek.london and lu.ma" },
+            { id: "m4", date: "2026-06-20", title: "MLOps London June talk night", desc: "Theme: AI Agents in Production: What Actually Breaks After the Demo. Perfect room for your error analysis work.", meta: "Check meetup.com/mlopslondon" },
+            { id: "m5", date: "2026-06-15", title: "Ongoing monthly meetups", desc: "Agentic AI London, Data and AI London, London AI Developers Group (AICamp).", meta: "Join on meetup.com" }
+        ];
+
+        // STATE MANAGER
+        let state = {
+            tasksCompleted: {}, // "legal-day1": true
+            metrics: {}, // "1": true
+            funnel: { sent: 0, replies: 0, interviews: 0 },
+            reflections: {}, // "YYYY-MM-DD": "text..."
+            lastUpdated: Date.now()
+        };
+
+        function loadState() {
+            const saved = localStorage.getItem('sprintState');
+            if (saved) {
+                try {
+                    state = { ...state, ...JSON.parse(saved) };
+                } catch(e) {
+                    console.error("Failed to parse state", e);
+                }
+            }
+            updateLastUpdatedTime();
+        }
+
+        function saveState() {
+            state.lastUpdated = Date.now();
+            localStorage.setItem('sprintState', JSON.stringify(state));
+            updateLastUpdatedTime();
+            updateProgressCounters();
+        }
+
+        function getTodayString() {
+            const d = new Date();
+            const year = d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        function getDayNumber(currentDate) {
+            const diffTime = Math.abs(currentDate - sprintStartDate);
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            
+            if (currentDate < sprintStartDate) return 0; // before sprint
+            if (diffDays >= totalDays) return totalDays + 1; // after sprint
+            return diffDays + 1;
+        }
+
+        function daysUntilEnd(currentDate) {
+            const diffTime = sprintEndDate - currentDate;
+            if (diffTime <= 0) return 0;
+            return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        }
+
+        // INITIALIZATION
+        function initApp() {
+            lucide.createIcons();
+            loadState();
+            initTheme();
+            renderHero();
+            renderTracks();
+            renderTodayFocus();
+            renderMeetups();
+            renderMetrics();
+            initFunnelInputs();
+            initDailyReflection();
+            initFooterActions();
+            updateProgressCounters();
+        }
+
+        // RENDER: HERO & THEME
+        function initTheme() {
+            const toggle = document.getElementById('themeToggle');
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            
+            // Check local storage or system preference
+            const savedTheme = localStorage.getItem('sprintTheme');
+            let isDark = true; // default dark
+            if (savedTheme) {
+                isDark = savedTheme === 'dark';
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+                isDark = false;
+            }
+
+            if (isDark) {
+                html.classList.add('dark');
+                icon.setAttribute('data-lucide', 'sun');
+            } else {
+                html.classList.remove('dark');
+                icon.setAttribute('data-lucide', 'moon');
+            }
+            lucide.createIcons();
+
+            toggle.addEventListener('click', () => {
+                const isCurrentlyDark = html.classList.contains('dark');
+                if (isCurrentlyDark) {
+                    html.classList.remove('dark');
+                    localStorage.setItem('sprintTheme', 'light');
+                    icon.setAttribute('data-lucide', 'moon');
+                } else {
+                    html.classList.add('dark');
+                    localStorage.setItem('sprintTheme', 'dark');
+                    icon.setAttribute('data-lucide', 'sun');
+                }
+                lucide.createIcons();
+            });
+        }
+
+        function renderHero() {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+            const dayNum = getDayNumber(now);
+            const daysLeft = daysUntilEnd(now);
+
+            let dayText = `Day ${dayNum} of 14`;
+            if (dayNum === 0) dayText = "Sprint has not started yet";
+            if (dayNum > 14) dayText = "Sprint has ended";
+
+            document.getElementById('heroDateInfo').innerHTML = `
+                <h1>${dateStr}</h1>
+                <p>${dayText}</p>
+            `;
+
+            document.getElementById('daysRemainingVal').textContent = daysLeft;
+
+            // Seedable random tagline per day
+            const seed = now.getFullYear() * 10000 + (now.getMonth()+1)*100 + now.getDate();
+            const taglineIndex = seed % taglines.length;
+            document.getElementById('dailyTagline').textContent = `"${taglines[taglineIndex]}"`;
+        }
+
+        // RENDER: TRACKS (Day Cards)
+        function renderTracks() {
+            const todayNum = getDayNumber(new Date());
+            
+            const legalContainer = document.getElementById('legalTrackContainer');
+            const jobContainer = document.getElementById('jobTrackContainer');
+            
+            legalContainer.innerHTML = '';
+            jobContainer.innerHTML = '';
+
+            for (let i = 0; i < totalDays; i++) {
+                const day = i + 1;
+                const d = new Date(sprintStartDate.getTime() + (i * 24 * 60 * 60 * 1000));
+                const dateStr = d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+                
+                const isOpen = (day === todayNum) ? 'open' : '';
+                
+                // Legal Task
+                const lTaskId = `legal-day${day}`;
+                const lChecked = state.tasksCompleted[lTaskId] ? 'checked' : '';
+                const lCard = document.createElement('div');
+                lCard.className = `day-card ${isOpen}`;
+                lCard.innerHTML = `
+                    <div class="day-header" onclick="this.parentElement.classList.toggle('open')">
+                        <div class="day-title">Day ${day} <span style="color:var(--text-tertiary); font-weight:normal; font-size:0.8em">(${dateStr})</span></div>
+                        <i data-lucide="chevron-down" class="day-icon" style="width:16px;height:16px"></i>
+                    </div>
+                    <div class="day-content">
+                        <label class="task-item" style="border-radius: 0 0 0.5rem 0.5rem; margin:0; border:none; box-shadow:none;">
+                            <input type="checkbox" id="${lTaskId}" ${lChecked} onchange="toggleTask('${lTaskId}', this.checked)">
+                            <div class="task-content">
+                                <span class="task-text">${legalTasks[i].text}</span>
+                            </div>
+                        </label>
+                    </div>
+                `;
+                legalContainer.appendChild(lCard);
+
+                // Job Task
+                const jTaskId = `job-day${day}`;
+                const jChecked = state.tasksCompleted[jTaskId] ? 'checked' : '';
+                const jCard = document.createElement('div');
+                jCard.className = `day-card ${isOpen}`;
+                jCard.innerHTML = `
+                    <div class="day-header" onclick="this.parentElement.classList.toggle('open')">
+                        <div class="day-title">Day ${day} <span style="color:var(--text-tertiary); font-weight:normal; font-size:0.8em">(${dateStr})</span></div>
+                        <i data-lucide="chevron-down" class="day-icon" style="width:16px;height:16px"></i>
+                    </div>
+                    <div class="day-content">
+                        <label class="task-item" style="border-radius: 0 0 0.5rem 0.5rem; margin:0; border:none; box-shadow:none;">
+                            <input type="checkbox" id="${jTaskId}" ${jChecked} onchange="toggleTask('${jTaskId}', this.checked)">
+                            <div class="task-content">
+                                <span class="task-text">${jobTasks[i].text}</span>
+                            </div>
+                        </label>
+                    </div>
+                `;
+                jobContainer.appendChild(jCard);
+            }
+            lucide.createIcons();
+        }
+
+        window.toggleTask = function(taskId, isChecked) {
+            state.tasksCompleted[taskId] = isChecked;
+            saveState();
+            renderTodayFocus(); // sync checkbox in today view
+            
+            // Sync checkbox in track view if toggled from today view
+            const el = document.getElementById(taskId);
+            if(el) el.checked = isChecked;
+            const todayEl = document.getElementById('today-' + taskId);
+            if(todayEl) todayEl.checked = isChecked;
+        }
+
+        // RENDER: TODAY'S FOCUS
+        function renderTodayFocus() {
+            const todayNum = getDayNumber(new Date());
+            const list = document.getElementById('todayFocusList');
+            list.innerHTML = '';
+
+            const todayStr = getTodayString();
+            
+            let hasTasks = false;
+
+            if (todayNum >= 1 && todayNum <= totalDays) {
+                // Add Legal Task
+                const lTk = legalTasks[todayNum - 1];
+                const lId = `legal-day${todayNum}`;
+                list.appendChild(createTodayItem(lId, lTk.text, "badge-lk", "LegalKGent", state.tasksCompleted[lId]));
+                
+                // Add Job Task
+                const jTk = jobTasks[todayNum - 1];
+                const jId = `job-day${todayNum}`;
+                list.appendChild(createTodayItem(jId, jTk.text, "badge-job", "Job Hunt", state.tasksCompleted[jId]));
+                hasTasks = true;
+            }
+
+            // check meetups for today
+            const todayMeetups = meetups.filter(m => m.date === todayStr);
+            todayMeetups.forEach((m, idx) => {
+                const mId = `meetup-today-${idx}`;
+                list.appendChild(createTodayItem(mId, `${m.title} (${m.desc})`, "badge-meetup", "Meetup", state.tasksCompleted[mId], true));
+                hasTasks = true;
+            });
+
+            if (!hasTasks) {
+                list.innerHTML = `
+                    <li class="task-item">
+                        <span class="task-content"><span class="task-text" style="color:var(--text-secondary)">No scheduled tasks for today. Rest or plan ahead!</span></span>
+                    </li>
+                `;
+            }
+        }
+
+        function createTodayItem(id, text, badgeClass, badgeText, isChecked, isMeetup=false) {
+            const li = document.createElement('li');
+            const onchangeStr = isMeetup ? `toggleTask('${id}', this.checked)` : `toggleTask('${id.replace('today-','')}', this.checked)`;
+            li.innerHTML = `
+                <label class="task-item" style="margin:0;">
+                    <input type="checkbox" id="today-${id}" ${isChecked ? 'checked' : ''} onchange="${onchangeStr}">
+                    <div class="task-content">
+                        <span class="task-badge ${badgeClass}">${badgeText}</span><br>
+                        <span class="task-text">${text}</span>
+                    </div>
+                </label>
+            `;
+            return li;
+        }
+
+        // RENDER: MEETUPS
+        function renderMeetups() {
+            const container = document.getElementById('meetupsContainer');
+            container.innerHTML = '';
+            const todayStr = getTodayString();
+
+            meetups.forEach((m, idx) => {
+                const isPast = m.date < todayStr;
+                const dObj = new Date(m.date);
+                const dateStr = dObj.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+                
+                const card = document.createElement('div');
+                card.className = `meetup-card ${isPast ? 'completed' : ''}`;
+                card.innerHTML = `
+                    <div class="meetup-date">${dateStr}</div>
+                    <h3 class="meetup-title">${m.title}</h3>
+                    <p class="meetup-desc">${m.desc}</p>
+                    <div class="meetup-meta"><i data-lucide="link" style="width:14px;height:14px"></i> ${m.meta}</div>
+                `;
+                container.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        // PROGRESS BARS
+        function updateProgressCounters() {
+            let totalLegal = totalDays, doneLegal = 0;
+            let totalJob = totalDays, doneJob = 0;
+            
+            for(let i=1; i<=totalDays; i++) {
+                if(state.tasksCompleted[`legal-day${i}`]) doneLegal++;
+                if(state.tasksCompleted[`job-day${i}`]) doneJob++;
+            }
+
+            const lp = Math.round((doneLegal/totalLegal)*100);
+            const jp = Math.round((doneJob/totalJob)*100);
+            const op = Math.round(((doneLegal+doneJob)/(totalLegal+totalJob))*100);
+
+            document.getElementById('legalProgressBar').style.width = `${lp}%`;
+            document.getElementById('legalProgressText').textContent = `${lp}%`;
+
+            document.getElementById('jobProgressBar').style.width = `${jp}%`;
+            document.getElementById('jobProgressText').textContent = `${jp}%`;
+
+            document.getElementById('overallProgressBar').style.width = `${op}%`;
+            document.getElementById('overallProgressText').textContent = `${op}%`;
+        }
+
+        // SUCCESS METRICS
+        function renderMetrics() {
+            [1,2,3,4].forEach(mId => {
+                const cb = document.getElementById(`metric${mId}`);
+                if(cb) {
+                    cb.checked = !!state.metrics[mId];
+                    cb.addEventListener('change', (e) => {
+                        state.metrics[mId] = e.target.checked;
+                        saveState();
+                    });
+                }
+            });
+        }
+
+        // FUNNEL COUNTER
+        function initFunnelInputs() {
+            const fSent = document.getElementById('funnelSent');
+            const fRep = document.getElementById('funnelReplies');
+            const fInt = document.getElementById('funnelInterviews');
+
+            fSent.value = state.funnel.sent;
+            fRep.value = state.funnel.replies;
+            fInt.value = state.funnel.interviews;
+
+            const saveFunnel = () => {
+                state.funnel.sent = parseInt(fSent.value) || 0;
+                state.funnel.replies = parseInt(fRep.value) || 0;
+                state.funnel.interviews = parseInt(fInt.value) || 0;
+                saveState();
+            };
+
+            fSent.addEventListener('change', saveFunnel);
+            fRep.addEventListener('change', saveFunnel);
+            fInt.addEventListener('change', saveFunnel);
+        }
+
+        // DAILY REFLECTION
+        function initDailyReflection() {
+            const todayStr = getTodayString();
+            const ta = document.getElementById('currentReflection');
+            const dateText = document.getElementById('reflectionDateText');
+            
+            dateText.textContent = `Notes for ${new Date().toLocaleDateString('en-GB')}`;
+            ta.value = state.reflections[todayStr] || '';
+            
+            let timeout = null;
+            ta.addEventListener('input', (e) => {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => {
+                    state.reflections[todayStr] = e.target.value;
+                    saveState();
+                }, 500); // debounce save
+            });
+
+            // Expandable past reflections
+            const toggleBtn = document.getElementById('togglePastReflectionsBtn');
+            const listContainer = document.getElementById('pastReflectionsList');
+            
+            toggleBtn.addEventListener('click', () => {
+                const isHidden = listContainer.style.display === 'none' || listContainer.style.display === '';
+                if (isHidden) {
+                    populatePastReflections(todayStr, listContainer);
+                    listContainer.style.display = 'flex';
+                    toggleBtn.innerHTML = `<i data-lucide="chevron-up" style="width: 16px; height: 16px;"></i> Hide past reflections`;
+                    lucide.createIcons();
+                } else {
+                    listContainer.style.display = 'none';
+                    toggleBtn.innerHTML = `<i data-lucide="history" style="width: 16px; height: 16px;"></i> View past reflections`;
+                    lucide.createIcons();
+                }
+            });
+        }
+
+        function populatePastReflections(todayStr, container) {
+            container.innerHTML = '';
+            const dates = Object.keys(state.reflections)
+                .filter(d => d !== todayStr && state.reflections[d].trim() !== '')
+                .sort((a,b) => b.localeCompare(a)); // sort desc
+            
+            if (dates.length === 0) {
+                container.innerHTML = `<div style="color:var(--text-tertiary); font-size: 0.9rem;">No past reflections yet.</div>`;
+                return;
+            }
+
+            dates.forEach(d => {
+                const text = state.reflections[d];
+                const cleanDate = new Date(d).toLocaleDateString('en-GB');
+                const div = document.createElement('div');
+                div.className = 'past-reflection-item';
+                div.innerHTML = `
+                    <div class="past-reflection-date">${cleanDate}</div>
+                    <div class="past-reflection-text">${text.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // FOOTER ACTIONS
+        function updateLastUpdatedTime() {
+            const el = document.getElementById('lastUpdatedText');
+            if(!el) return;
+            const date = new Date(state.lastUpdated);
+            el.textContent = `Local data auto-saved • Last updated: ${date.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'})}`;
+        }
+
+        function initFooterActions() {
+            // Export JSON
+            document.getElementById('exportBtn').addEventListener('click', () => {
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
+                const downloadAnchorNode = document.createElement('a');
+                downloadAnchorNode.setAttribute("href",     dataStr);
+                downloadAnchorNode.setAttribute("download", `sprint-backup-${getTodayString()}.json`);
+                document.body.appendChild(downloadAnchorNode);
+                downloadAnchorNode.click();
+                downloadAnchorNode.remove();
+            });
+
+            // Reset Logic
+            const modal = document.getElementById('resetModal');
+            document.getElementById('resetBtn').addEventListener('click', () => {
+                modal.style.display = 'grid';
+            });
+            document.getElementById('cancelResetBtn').addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+            document.getElementById('confirmResetBtn').addEventListener('click', () => {
+                localStorage.removeItem('sprintState');
+                location.reload(); // Quickest way to clear everything visually
+            });
+        }
+
+        // DOM Ready
+        document.addEventListener('DOMContentLoaded', initApp);
+
+    </script>
+</body>
+</html>
