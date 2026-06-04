@@ -1,0 +1,14 @@
+{
+  "tasksCompleted": {
+    "legal-day1": false,
+    "legal-day3": false
+  },
+  "metrics": {},
+  "funnel": {
+    "sent": 0,
+    "replies": 0,
+    "interviews": 0
+  },
+  "reflections": {},
+  "lastUpdated": 1780591180374
+}
