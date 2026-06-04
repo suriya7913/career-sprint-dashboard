@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Suriya's Sprint Dashboard</title>
-    
+
     <!-- Preconnect to Google Fonts for Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -149,7 +150,7 @@
         .hero-progress-container {
             margin-bottom: 1.5rem;
         }
-        
+
         .progress-header {
             display: flex;
             justify-content: space-between;
@@ -260,7 +261,7 @@
             outline: 2px solid var(--accent-color);
             outline-offset: 2px;
         }
-        
+
         .task-content {
             flex-grow: 1;
         }
@@ -270,7 +271,7 @@
             transition: color var(--transition-speed);
         }
 
-        .task-item input[type="checkbox"]:checked ~ .task-content .task-text {
+        .task-item input[type="checkbox"]:checked~.task-content .task-text {
             text-decoration: line-through;
             color: var(--text-tertiary);
         }
@@ -284,10 +285,21 @@
             margin-bottom: 0.25rem;
             text-transform: uppercase;
         }
-        
-        .badge-lk { background-color: rgba(14, 165, 233, 0.15); color: var(--accent-color); }
-        .badge-job { background-color: rgba(16, 185, 129, 0.15); color: var(--success-color); }
-        .badge-meetup { background-color: rgba(168, 85, 247, 0.15); color: #c084fc; }
+
+        .badge-lk {
+            background-color: rgba(14, 165, 233, 0.15);
+            color: var(--accent-color);
+        }
+
+        .badge-job {
+            background-color: rgba(16, 185, 129, 0.15);
+            color: var(--success-color);
+        }
+
+        .badge-meetup {
+            background-color: rgba(168, 85, 247, 0.15);
+            color: #c084fc;
+        }
 
         /* Main 2-column layout */
         .two-col {
@@ -416,7 +428,7 @@
             text-align: center;
             font-family: inherit;
         }
-        
+
         .stat-input:focus {
             outline: none;
             color: var(--accent-color);
@@ -439,11 +451,11 @@
         .horizontal-scroll::-webkit-scrollbar {
             height: 6px;
         }
-        
+
         .horizontal-scroll::-webkit-scrollbar-track {
             background: var(--bg-color);
         }
-        
+
         .horizontal-scroll::-webkit-scrollbar-thumb {
             background-color: var(--text-tertiary);
             border-radius: 3px;
@@ -719,11 +731,16 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="container">
         <!-- Theme Toggle -->
-        <header class="page-header">
+        <header class="page-header" style="gap: 1rem;">
+            <button id="settingsBtn" class="icon-btn" aria-label="GitHub Sync Settings">
+                <i data-lucide="settings"></i>
+                <span style="font-size: 0.8rem; font-weight: 500; margin-left: 0.5rem;">Sync Settings</span>
+            </button>
             <button id="themeToggle" class="icon-btn" aria-label="Toggle theme">
                 <i data-lucide="moon" id="themeIcon"></i>
             </button>
@@ -741,7 +758,7 @@
                     <div class="days-label">Days to 18 Jun</div>
                 </div>
             </div>
-            
+
             <div class="hero-progress-container">
                 <div class="progress-header">
                     <span>Overall Progress</span>
@@ -751,7 +768,7 @@
                     <div class="progress-bar-fill" id="overallProgressBar" style="width: 0%;"></div>
                 </div>
             </div>
-            
+
             <p class="tagline" id="dailyTagline">"Loading motivation..."</p>
         </section>
 
@@ -780,7 +797,7 @@
                         <div class="progress-bar-fill" id="legalProgressBar" style="width: 0%;"></div>
                     </div>
                 </div>
-                
+
                 <div class="day-cards" id="legalTrackContainer">
                     <!-- Day cards injected via JS -->
                 </div>
@@ -799,7 +816,7 @@
                         <div class="progress-bar-fill" id="jobProgressBar" style="width: 0%;"></div>
                     </div>
                 </div>
-                
+
                 <div class="day-cards" id="jobTrackContainer">
                     <!-- Day cards injected via JS -->
                 </div>
@@ -812,11 +829,13 @@
                     </div>
                     <div class="stat-card">
                         <div class="stat-label">Replies</div>
-                        <input type="number" class="stat-input" id="funnelReplies" name="funnelReplies" value="0" min="0">
+                        <input type="number" class="stat-input" id="funnelReplies" name="funnelReplies" value="0"
+                            min="0">
                     </div>
                     <div class="stat-card">
                         <div class="stat-label">Interviews</div>
-                        <input type="number" class="stat-input" id="funnelInterviews" name="funnelInterviews" value="0" min="0">
+                        <input type="number" class="stat-input" id="funnelInterviews" name="funnelInterviews" value="0"
+                            min="0">
                     </div>
                 </div>
             </section>
@@ -834,22 +853,25 @@
         <section class="success-metrics">
             <h2 class="section-title"><i data-lucide="trending-up"></i> Success Metrics (18 June Check)</h2>
             <div class="metrics-grid">
-                
+
                 <div class="metric-card">
                     <div class="metric-header">
                         <div class="metric-icon"><i data-lucide="github"></i></div>
-                        <div class="metric-text">LegalKGent has public repo with credible README, 4 baselines tested, expanded eval set (150+ queries), ablation results, published blog post. Paper skeleton exists.</div>
+                        <div class="metric-text">LegalKGent has public repo with credible README, 4 baselines tested,
+                            expanded eval set (150+ queries), ablation results, published blog post. Paper skeleton
+                            exists.</div>
                     </div>
                     <label class="task-item" style="padding:0; margin-top: auto;">
                         <input type="checkbox" id="metric1" data-metric="1">
                         <span class="task-content"><span class="task-text text-sm">Goal Achieved</span></span>
                     </label>
                 </div>
-                
+
                 <div class="metric-card">
                     <div class="metric-header">
                         <div class="metric-icon"><i data-lucide="briefcase"></i></div>
-                        <div class="metric-text">20+ targeted outreach messages sent, 10+ tailored applications submitted, at least 1 interview scheduled or 1 warm founder/recruiter conversation.</div>
+                        <div class="metric-text">20+ targeted outreach messages sent, 10+ tailored applications
+                            submitted, at least 1 interview scheduled or 1 warm founder/recruiter conversation.</div>
                     </div>
                     <label class="task-item" style="padding:0; margin-top: auto;">
                         <input type="checkbox" id="metric2" data-metric="2">
@@ -860,7 +882,8 @@
                 <div class="metric-card">
                     <div class="metric-header">
                         <div class="metric-icon"><i data-lucide="map-pin"></i></div>
-                        <div class="metric-text">Attended at least 2 in-person meetups. 5+ new LinkedIn contacts from each.</div>
+                        <div class="metric-text">Attended at least 2 in-person meetups. 5+ new LinkedIn contacts from
+                            each.</div>
                     </div>
                     <label class="task-item" style="padding:0; margin-top: auto;">
                         <input type="checkbox" id="metric3" data-metric="3">
@@ -871,7 +894,8 @@
                 <div class="metric-card">
                     <div class="metric-header">
                         <div class="metric-icon"><i data-lucide="file-check"></i></div>
-                        <div class="metric-text">Confirmed visa working-hours situation with Anglia Ruskin in writing.</div>
+                        <div class="metric-text">Confirmed visa working-hours situation with Anglia Ruskin in writing.
+                        </div>
                     </div>
                     <label class="task-item" style="padding:0; margin-top: auto;">
                         <input type="checkbox" id="metric4" data-metric="4">
@@ -885,9 +909,11 @@
         <!-- SECTION 7: DAILY REFLECTION -->
         <section class="reflection-section">
             <h2 class="section-title"><i data-lucide="book-open"></i> Daily Reflection</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem;" id="reflectionDateText"></p>
-            <textarea class="reflection-textarea" id="currentReflection" placeholder="What went well today? What needs adjustment tomorrow?"></textarea>
-            
+            <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem;" id="reflectionDateText">
+            </p>
+            <textarea class="reflection-textarea" id="currentReflection"
+                placeholder="What went well today? What needs adjustment tomorrow?"></textarea>
+
             <div class="past-reflections">
                 <button class="btn" id="togglePastReflectionsBtn">
                     <i data-lucide="history" style="width: 16px; height: 16px;"></i>
@@ -902,7 +928,7 @@
         <!-- SECTION 8: FOOTER -->
         <footer class="site-footer">
             <div class="footer-metrics" id="lastUpdatedText">Last updated: Just now</div>
-            
+
             <div class="footer-actions">
                 <button class="btn btn-danger" id="resetBtn">
                     <i data-lucide="alert-triangle" style="width: 16px; height: 16px;"></i>
@@ -912,8 +938,13 @@
                     <i data-lucide="download" style="width: 16px; height: 16px;"></i>
                     Export JSON
                 </button>
+                <button class="btn btn-primary" id="githubSyncBtn"
+                    style="background-color: #10b981; border-color: #10b981;">
+                    <i data-lucide="cloud-upload" style="width: 16px; height: 16px;"></i>
+                    Push to GitHub
+                </button>
             </div>
-            
+
             <a href="#" class="github-link">
                 <i data-lucide="github" style="width: 20px; height: 20px;"></i>
                 Hosted on GitHub Pages
@@ -921,11 +952,30 @@
         </footer>
     </div>
 
+
+    <!-- GitHub Settings Modal -->
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal">
+            <h3 class="modal-title" style="color:var(--text-primary);">GitHub Sync Configuration</h3>
+            <p class="modal-body">Enter a GitHub Personal Access Token (PAT) with <strong>repo</strong> scope to sync your state across devices seamlessly via GitHub Pages.</p>
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display:block; font-size:0.875rem; font-weight:600; margin-bottom:0.5rem; color:var(--text-secondary);">GitHub Token (PAT)</label>
+                <input type="password" id="githubTokenInput" style="width:100%; padding:0.5rem; border:1px solid var(--border-color); border-radius:0.5rem; background:var(--bg-color); color:var(--text-primary);" placeholder="ghp_************************">
+                <p style="font-size:0.75rem; color:var(--text-tertiary); margin-top:0.5rem;">This token is stored purely locally in your browser's localStorage and never sent anywhere except directly to api.github.com.</p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn" id="closeSettingsBtn">Close</button>
+                <button class="btn btn-primary" id="saveSettingsBtn">Save & Sync Now</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Confirmation Modal for Reset -->
     <div class="modal-overlay" id="resetModal">
         <div class="modal">
             <h3 class="modal-title">Reset All Progress?</h3>
-            <p class="modal-body">This will wipe all checked tasks, funnel counts, and daily reflections from your local browser storage. This action cannot be undone.</p>
+            <p class="modal-body">This will wipe all checked tasks, funnel counts, and daily reflections from your local
+                browser storage. This action cannot be undone.</p>
             <div class="modal-actions">
                 <button class="btn" id="cancelResetBtn">Cancel</button>
                 <button class="btn btn-danger" id="confirmResetBtn">Yes, wipe it</button>
@@ -1003,7 +1053,7 @@
             if (saved) {
                 try {
                     state = { ...state, ...JSON.parse(saved) };
-                } catch(e) {
+                } catch (e) {
                     console.error("Failed to parse state", e);
                 }
             }
@@ -1028,7 +1078,7 @@
         function getDayNumber(currentDate) {
             const diffTime = Math.abs(currentDate - sprintStartDate);
             const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-            
+
             if (currentDate < sprintStartDate) return 0; // before sprint
             if (diffDays >= totalDays) return totalDays + 1; // after sprint
             return diffDays + 1;
@@ -1041,9 +1091,77 @@
         }
 
         // INITIALIZATION
-        function initApp() {
+
+        let githubToken = localStorage.getItem('sprintGithubToken') || '';
+        let githubSha = localStorage.getItem('sprintGithubSha') || '';
+        const repoOwner = 'suriya7913';
+        const repoName = 'career-sprint-dashboard';
+        const repoEndpoint = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/state.json`;
+
+        async function fetchStateFromGitHub() {
+            if (!githubToken) return;
+            try {
+                const res = await fetch(repoEndpoint, {
+                    headers: { 'Authorization': `token ${githubToken}` }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    githubSha = data.sha;
+                    localStorage.setItem('sprintGithubSha', githubSha);
+                    
+                    const decoded = JSON.parse(decodeURIComponent(escape(atob(data.content))));
+                    if (decoded.lastUpdated && (!state.lastUpdated || decoded.lastUpdated > state.lastUpdated)) {
+                        state = decoded;
+                        localStorage.setItem('sprintState', JSON.stringify(state));
+                    }
+                }
+            } catch(e) { console.error("Fetch state error", e); }
+        }
+
+        async function pushStateToGitHub() {
+            if (!githubToken) {
+                document.getElementById('settingsModal').style.display = 'grid';
+                return false;
+            }
+            try {
+                const contentStr = JSON.stringify(state, null, 2);
+                const base64Content = btoa(unescape(encodeURIComponent(contentStr)));
+                
+                const payload = {
+                    message: "backup: cloud sync state via dashboard",
+                    content: base64Content,
+                    branch: "master"
+                };
+                if (githubSha) payload.sha = githubSha;
+
+                const res = await fetch(repoEndpoint, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `token ${githubToken}`, 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const data = await res.json();
+                if (res.ok) {
+                    githubSha = data.content.sha;
+                    localStorage.setItem('sprintGithubSha', githubSha);
+                    return true;
+                } else if (res.status === 409 || res.status === 422) {
+                    alert('Sync error: Remote has updated. Please refresh the page to pull latest data first.');
+                    return false;
+                } else {
+                    alert('GitHub API error. Check PAT validity.');
+                    return false;
+                }
+            } catch(e) {
+                console.error("Push state error", e);
+                return false;
+            }
+        }
+        
+        async function initApp() {
             lucide.createIcons();
             loadState();
+            await fetchStateFromGitHub(); // Pull from cloud if configured
             initTheme();
             renderHero();
             renderTracks();
@@ -1053,15 +1171,41 @@
             initFunnelInputs();
             initDailyReflection();
             initFooterActions();
+            initSettingsModal();
             updateProgressCounters();
         }
+        
+        function initSettingsModal() {
+            const modal = document.getElementById('settingsModal');
+            const input = document.getElementById('githubTokenInput');
+            
+            document.getElementById('settingsBtn').addEventListener('click', () => {
+                input.value = githubToken;
+                modal.style.display = 'grid';
+            });
+            document.getElementById('closeSettingsBtn').addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+            document.getElementById('saveSettingsBtn').addEventListener('click', async () => {
+                const newToken = input.value.trim();
+                githubToken = newToken;
+                localStorage.setItem('sprintGithubToken', newToken);
+                modal.style.display = 'none';
+                if (newToken) {
+                    await fetchStateFromGitHub(); // check if data exists and pull it
+                    const success = await pushStateToGitHub(); // push current state
+                    if(success) location.reload(); // reload app with fresh data
+                }
+            });
+        }
+
 
         // RENDER: HERO & THEME
         function initTheme() {
             const toggle = document.getElementById('themeToggle');
             const html = document.documentElement;
             const icon = document.getElementById('themeIcon');
-            
+
             // Check local storage or system preference
             const savedTheme = localStorage.getItem('sprintTheme');
             let isDark = true; // default dark
@@ -1113,7 +1257,7 @@
             document.getElementById('daysRemainingVal').textContent = daysLeft;
 
             // Seedable random tagline per day
-            const seed = now.getFullYear() * 10000 + (now.getMonth()+1)*100 + now.getDate();
+            const seed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
             const taglineIndex = seed % taglines.length;
             document.getElementById('dailyTagline').textContent = `"${taglines[taglineIndex]}"`;
         }
@@ -1121,10 +1265,10 @@
         // RENDER: TRACKS (Day Cards)
         function renderTracks() {
             const todayNum = getDayNumber(new Date());
-            
+
             const legalContainer = document.getElementById('legalTrackContainer');
             const jobContainer = document.getElementById('jobTrackContainer');
-            
+
             legalContainer.innerHTML = '';
             jobContainer.innerHTML = '';
 
@@ -1132,9 +1276,9 @@
                 const day = i + 1;
                 const d = new Date(sprintStartDate.getTime() + (i * 24 * 60 * 60 * 1000));
                 const dateStr = d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
-                
+
                 const isOpen = (day === todayNum) ? 'open' : '';
-                
+
                 // Legal Task
                 const lTaskId = `legal-day${day}`;
                 const lChecked = state.tasksCompleted[lTaskId] ? 'checked' : '';
@@ -1180,16 +1324,16 @@
             lucide.createIcons();
         }
 
-        window.toggleTask = function(taskId, isChecked) {
+        window.toggleTask = function (taskId, isChecked) {
             state.tasksCompleted[taskId] = isChecked;
             saveState();
             renderTodayFocus(); // sync checkbox in today view
-            
+
             // Sync checkbox in track view if toggled from today view
             const el = document.getElementById(taskId);
-            if(el) el.checked = isChecked;
+            if (el) el.checked = isChecked;
             const todayEl = document.getElementById('today-' + taskId);
-            if(todayEl) todayEl.checked = isChecked;
+            if (todayEl) todayEl.checked = isChecked;
         }
 
         // RENDER: TODAY'S FOCUS
@@ -1199,7 +1343,7 @@
             list.innerHTML = '';
 
             const todayStr = getTodayString();
-            
+
             let hasTasks = false;
 
             if (todayNum >= 1 && todayNum <= totalDays) {
@@ -1207,7 +1351,7 @@
                 const lTk = legalTasks[todayNum - 1];
                 const lId = `legal-day${todayNum}`;
                 list.appendChild(createTodayItem(lId, lTk.text, "badge-lk", "LegalKGent", state.tasksCompleted[lId]));
-                
+
                 // Add Job Task
                 const jTk = jobTasks[todayNum - 1];
                 const jId = `job-day${todayNum}`;
@@ -1232,9 +1376,9 @@
             }
         }
 
-        function createTodayItem(id, text, badgeClass, badgeText, isChecked, isMeetup=false) {
+        function createTodayItem(id, text, badgeClass, badgeText, isChecked, isMeetup = false) {
             const li = document.createElement('li');
-            const onchangeStr = isMeetup ? `toggleTask('${id}', this.checked)` : `toggleTask('${id.replace('today-','')}', this.checked)`;
+            const onchangeStr = isMeetup ? `toggleTask('${id}', this.checked)` : `toggleTask('${id.replace('today-', '')}', this.checked)`;
             li.innerHTML = `
                 <label class="task-item" style="margin:0;">
                     <input type="checkbox" id="today-${id}" ${isChecked ? 'checked' : ''} onchange="${onchangeStr}">
@@ -1257,7 +1401,7 @@
                 const isPast = m.date < todayStr;
                 const dObj = new Date(m.date);
                 const dateStr = dObj.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
-                
+
                 const card = document.createElement('div');
                 card.className = `meetup-card ${isPast ? 'completed' : ''}`;
                 card.innerHTML = `
@@ -1275,15 +1419,15 @@
         function updateProgressCounters() {
             let totalLegal = totalDays, doneLegal = 0;
             let totalJob = totalDays, doneJob = 0;
-            
-            for(let i=1; i<=totalDays; i++) {
-                if(state.tasksCompleted[`legal-day${i}`]) doneLegal++;
-                if(state.tasksCompleted[`job-day${i}`]) doneJob++;
+
+            for (let i = 1; i <= totalDays; i++) {
+                if (state.tasksCompleted[`legal-day${i}`]) doneLegal++;
+                if (state.tasksCompleted[`job-day${i}`]) doneJob++;
             }
 
-            const lp = Math.round((doneLegal/totalLegal)*100);
-            const jp = Math.round((doneJob/totalJob)*100);
-            const op = Math.round(((doneLegal+doneJob)/(totalLegal+totalJob))*100);
+            const lp = Math.round((doneLegal / totalLegal) * 100);
+            const jp = Math.round((doneJob / totalJob) * 100);
+            const op = Math.round(((doneLegal + doneJob) / (totalLegal + totalJob)) * 100);
 
             document.getElementById('legalProgressBar').style.width = `${lp}%`;
             document.getElementById('legalProgressText').textContent = `${lp}%`;
@@ -1297,9 +1441,9 @@
 
         // SUCCESS METRICS
         function renderMetrics() {
-            [1,2,3,4].forEach(mId => {
+            [1, 2, 3, 4].forEach(mId => {
                 const cb = document.getElementById(`metric${mId}`);
-                if(cb) {
+                if (cb) {
                     cb.checked = !!state.metrics[mId];
                     cb.addEventListener('change', (e) => {
                         state.metrics[mId] = e.target.checked;
@@ -1336,10 +1480,10 @@
             const todayStr = getTodayString();
             const ta = document.getElementById('currentReflection');
             const dateText = document.getElementById('reflectionDateText');
-            
+
             dateText.textContent = `Notes for ${new Date().toLocaleDateString('en-GB')}`;
             ta.value = state.reflections[todayStr] || '';
-            
+
             let timeout = null;
             ta.addEventListener('input', (e) => {
                 clearTimeout(timeout);
@@ -1352,7 +1496,7 @@
             // Expandable past reflections
             const toggleBtn = document.getElementById('togglePastReflectionsBtn');
             const listContainer = document.getElementById('pastReflectionsList');
-            
+
             toggleBtn.addEventListener('click', () => {
                 const isHidden = listContainer.style.display === 'none' || listContainer.style.display === '';
                 if (isHidden) {
@@ -1372,8 +1516,8 @@
             container.innerHTML = '';
             const dates = Object.keys(state.reflections)
                 .filter(d => d !== todayStr && state.reflections[d].trim() !== '')
-                .sort((a,b) => b.localeCompare(a)); // sort desc
-            
+                .sort((a, b) => b.localeCompare(a)); // sort desc
+
             if (dates.length === 0) {
                 container.innerHTML = `<div style="color:var(--text-tertiary); font-size: 0.9rem;">No past reflections yet.</div>`;
                 return;
@@ -1395,17 +1539,41 @@
         // FOOTER ACTIONS
         function updateLastUpdatedTime() {
             const el = document.getElementById('lastUpdatedText');
-            if(!el) return;
+            if (!el) return;
             const date = new Date(state.lastUpdated);
-            el.textContent = `Local data auto-saved • Last updated: ${date.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'})}`;
+            el.textContent = `Local data auto-saved • Last updated: ${date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}`;
         }
 
         function initFooterActions() {
+            // GitHub Sync
+            const syncBtn = document.getElementById('githubSyncBtn');
+            syncBtn.addEventListener('click', async () => {
+                const originalText = syncBtn.innerHTML;
+                syncBtn.innerHTML = '<i data-lucide="loader" class="spin" style="width: 16px; height: 16px;"></i> Syncing...';
+                lucide.createIcons();
+                
+                const success = await pushStateToGitHub();
+                
+                if (success) {
+                    syncBtn.innerHTML = '<i data-lucide="check" style="width: 16px; height: 16px;"></i> Synced!';
+                } else {
+                    syncBtn.innerHTML = originalText;
+                }
+                lucide.createIcons();
+                
+                if (success) {
+                    setTimeout(() => {
+                        syncBtn.innerHTML = originalText;
+                        lucide.createIcons();
+                    }, 3000);
+                }
+            });
+
             // Export JSON
             document.getElementById('exportBtn').addEventListener('click', () => {
                 const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
                 const downloadAnchorNode = document.createElement('a');
-                downloadAnchorNode.setAttribute("href",     dataStr);
+                downloadAnchorNode.setAttribute("href", dataStr);
                 downloadAnchorNode.setAttribute("download", `sprint-backup-${getTodayString()}.json`);
                 document.body.appendChild(downloadAnchorNode);
                 downloadAnchorNode.click();
@@ -1431,4 +1599,5 @@
 
     </script>
 </body>
+
 </html>
