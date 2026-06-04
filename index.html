@@ -970,6 +970,24 @@
         </div>
     </div>
 
+
+    <!-- GitHub Settings Modal -->
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal">
+            <h3 class="modal-title" style="color:var(--text-primary);">GitHub Sync Configuration</h3>
+            <p class="modal-body">Enter a GitHub Personal Access Token (PAT) with <strong>repo</strong> scope to sync your state across devices seamlessly via GitHub Pages.</p>
+            <div style="margin-bottom: 1.5rem;">
+                <label style="display:block; font-size:0.875rem; font-weight:600; margin-bottom:0.5rem; color:var(--text-secondary);">GitHub Token (PAT)</label>
+                <input type="password" id="githubTokenInput" style="width:100%; padding:0.5rem; border:1px solid var(--border-color); border-radius:0.5rem; background:var(--bg-color); color:var(--text-primary);" placeholder="ghp_************************">
+                <p style="font-size:0.75rem; color:var(--text-tertiary); margin-top:0.5rem;">This token is stored purely locally in your browser's localStorage and never sent anywhere except directly to api.github.com.</p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn" id="closeSettingsBtn">Close</button>
+                <button class="btn btn-primary" id="saveSettingsBtn">Save & Sync Now</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Confirmation Modal for Reset -->
     <div class="modal-overlay" id="resetModal">
         <div class="modal">
