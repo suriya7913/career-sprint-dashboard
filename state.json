@@ -2,7 +2,8 @@
   "tasksCompleted": {
     "legal-day1": false,
     "legal-day3": false,
-    "legal-day5": true
+    "legal-day5": false,
+    "legal-day7": false
   },
   "metrics": {},
   "funnel": {
@@ -13,5 +14,5 @@
   "reflections": {
     "2026-06-04": "ok"
   },
-  "lastUpdated": 1780591278680
+  "lastUpdated": 1780591328392
 }
