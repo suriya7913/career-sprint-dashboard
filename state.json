@@ -1,5 +1,12 @@
 {
-  "tasksCompleted": {},
+  "tasksCompleted": {
+    "job-day1": true,
+    "legal-day1": true,
+    "legal-day2": true,
+    "job-day3": true,
+    "job-day4": true,
+    "job-day5": true
+  },
   "metrics": {},
   "funnel": {
     "sent": 0,
@@ -7,5 +14,5 @@
     "interviews": 0
   },
   "reflections": {},
-  "lastUpdated": 1781182315630
+  "lastUpdated": 1781199310822
 }
